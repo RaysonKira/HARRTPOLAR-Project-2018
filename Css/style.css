@@ -195,3 +195,47 @@ a.article:hover {
     width:30px;
     height:30px;
 }
+
+
+/* Survey Style*/
+.surveyContent {
+    padding: 15px 10px;
+    background: #fff;
+    height: 100%;
+    width:initial;
+    border-radius: 5px;
+    margin-bottom: 40px;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+}
+.surveyContent2 {
+    font-family: Arial;
+    margin-top: 30px;
+    font-size: 14px;
+}
+
+
+.surveyContent2 th {
+    background-color: #5D7B9D;
+    font-weight: bold;
+    color: #fff;
+    padding: 2px 10px;
+}
+
+.surveyContent2 td {
+    padding: 2px 10px;
+}
+
+input[type="submit"] {
+    margin: 2px 10px;
+    padding: 2px 20px;
+    background-color: #5D7B9D;
+    border-radius: 10px;
+    border: solid 1px #000;
+    cursor: pointer;
+    color: #fff;
+}
+
+input[type="submit"]:hover {
+    background-color: orange;
+}
+} 
