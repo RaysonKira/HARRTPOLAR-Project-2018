@@ -14,6 +14,6 @@ public partial class MasterPage : System.Web.UI.MasterPage
 
     protected void linkButton_Click(object sender, EventArgs e)
     {
-        Response.Redirect("itineraryCreatorStep1.aspx");
+        Response.Redirect("RaysonWebPages/itineraryCreatorStep1.aspx");
     }
 }

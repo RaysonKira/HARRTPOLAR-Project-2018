@@ -1,0 +1,400 @@
+﻿  .container {
+      width: 1200px;
+      margin: 100px auto; 
+  }
+  .progressbar {
+      counter-reset: step;
+  }
+  .progressbar li {
+      list-style-type: none;
+      width: 25%;
+      float: left;
+      font-size: 12px;
+      position: relative;
+      text-align: center;
+      text-transform: uppercase;
+      color: #7d7d7d;
+  }
+  .progressbar li:before {
+      width: 30px;
+      height: 30px;
+      content: counter(step);
+      counter-increment: step;
+      line-height: 30px;
+      border: 2px solid #7d7d7d;
+      display: block;
+      text-align: center;
+      margin: 0 auto 10px auto;
+      border-radius: 50%;
+      background-color: white;
+  }
+  .progressbar li:after {
+      width: 100%;
+      height: 2px;
+      content: '';
+      position: absolute;
+      background-color: #7d7d7d;
+      top: 15px;
+      left: -50%;
+      z-index: -1;
+  }
+  .progressbar li:first-child:after {
+      content: none;
+  }
+  .progressbar li.active {
+      color: green;
+  }
+  .progressbar li.active:before {
+      border-color: #55b776;
+  }
+  .progressbar li.active + li:after {
+      background-color: #55b776;
+  }
+
+  * {
+  box-sizing: border-box;
+}
+
+/* Column right form styling */
+.columnRight {
+  float: right;
+  width: 60%;
+  padding: 10px;
+  border: solid;
+}
+
+/* Column left details styling */
+.columnLeft {
+    float: right;
+    width: 40%;
+    padding: 10px;
+    overflow-y: auto;
+    direction: ltr;
+    text-align: left;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+#pictureSection {
+    background-image: url("/Images/blackDragon.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.loader {
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.travelItineraryDiv {
+
+height: 69%;
+
+overflow: auto;
+
+}
+
+.travelItineraryDiv {
+    max-width: 100%;
+    max-height: 100%;
+    margin: auto;
+    overflow-y: auto;
+    direction: ltr;
+    text-align: left;
+}
+
+.slidecontainer {
+  width: 100%;
+}
+
+.slider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 25px;
+  background: #d3d3d3;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
+
+.slider:hover {
+  opacity: 1;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  background: #4CAF50;
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  background: #4CAF50;
+  cursor: pointer;
+}
+
+/* Testing */
+/* =Content
+---------------------------*/
+.content-wrapper {
+  padding: 40px;
+}
+.site-content {
+  padding-bottom: 40px;
+  border-bottom: 1px dotted #999;
+}
+.sidebar {
+  padding-top: 40px;
+  font-size: 13px;
+  line-height: 21px;
+  text-align: center;
+}
+.widget {
+  padding-bottom: 20px;
+}
+
+@media (min-width: 800px) {
+  .site-content {
+    width: 70%;
+    float: left;
+    border: none;
+  }
+  .sidebar {
+    width: 30%;
+    float: left;
+    padding-top: 0;
+    text-align: left;
+  }
+  .widget {
+    padding-left: 20px;
+  }
+}
+
+.toolBox
+{
+    border: solid;
+    max-width: 100%;
+    max-height: 100%;
+    margin: auto;
+    overflow-y: auto;
+    direction: ltr;
+    text-align: center;
+}
+
+/* Test */
+#console {display: none;}
+#dialog {
+  position: fixed;
+  z-index: 9999;
+  top: 0;
+  left: 0;
+  width: 100%;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.15);
+  transition: visibility 0s linear 0.5s,opacity 0.5s linear;
+  opacity: 0;
+  visibility: hidden;
+}
+.dialog_state {
+  visibility: hidden;
+  opacity: 0;
+  display: none;
+}
+.dialog_state:checked + #dialog,
+#dialog.dialog_open {
+  transition-delay:0s;
+  opacity: 1;
+  visibility: visible;
+}
+#dlg-back {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  width: 100vw;
+  height: 100vh;
+  cursor: pointer;
+}
+.dialog_state:checked + #dialog #dlg-wrap {
+  max-height: 24rem;
+  opacity: 1;
+  padding: 2rem;
+}
+#dlg-wrap {
+  position: relative;
+  z-index: 1;
+  display: block;
+  box-sizing: border-box;
+  margin: 0 auto;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 640px;
+  padding: 2rem;
+  border-radius: 0.25rem;
+  /*border: 1px solid #969696;*/
+  background: #fff;
+  box-shadow: 1px 1px 6px rgba(0,0,0,0.3);
+  max-height: 0;
+  opacity: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  overflow: hidden;
+  transition: all .5s;
+}
+#dlg-close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 2rem;
+  height: 2rem;
+  line-height: 2rem;
+  text-align: center;
+  cursor: pointer;
+}
+h2#dlg-header {
+  font: 200 2em/1em Raleway, Open Sans, Arial, Sans-Serif;
+  text-transform: initial;
+  letter-spacing: -0.025em;
+  margin: 0 0 1rem;
+}
+#dlg-content {
+  font-weight: 300;
+  font-style: italic;
+  letter-spacing: 0.015em;
+}
+#dlg-prompt .button {
+  margin: 1rem 0.5rem;
+  border-radius: 1.5rem;
+}
+
+
+
+.main_area {
+  transition: all 0.5s ease-out;
+}
+.dialog_state:checked ~ .main_area,
+.main_area.dialog_open {
+  filter: blur(6px);
+}
+
+.button, a.button {
+  display: inline-block;
+  padding: 0.25em 1em;
+  box-sizing: border-box;
+  
+  background: #ffffff;
+  color: #606060;
+  text-decoration: none;
+  letter-spacing: 0.075em;
+  line-height: 2rem;
+  font-family: Raleway, Open Sans, Arial;
+  font-weight: 300;
+  font-size: 0.85em;
+  border-radius: 4px;
+  border: 1px solid #e0e0e0;
+  
+  transition: .1s all;
+  cursor: pointer;
+}
+.button:hover, a.button:hover {
+  color: #a0a0a0;
+  background: #f8f8f8;
+  box-shadow: 0 1px 1px rgba(0,0,0,0.05);
+  /*transform: scale(1.01);*/
+}
+.button.positive, a.button.positive {
+  border-color: #6199B7;
+  color: #6199B7;
+}
+.button.positive:hover, a.button.positive:hover {
+  border-color: #468FB6;
+  color: #fff;
+  background-color: #468FB6;
+}
+
+.icon {
+  vertical-align: middle;
+  line-height: inherit;
+  font-size: 1.75em;
+}
+
+body {
+  font: 400 16px/1.65em Open Sans, Arial, Sans-Serif;
+  letter-spacing: -0.015em;
+  color: #303030;
+  text-align: center;
+}
+#main {
+  height: 100vh;
+  width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+  background: url("https://farm6.staticflickr.com/5688/21515632899_94e4ddb78a_o.jpg") no-repeat center center;
+  background-size: cover;
+}
+#main .center {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 100%;
+}
+h1 {
+  font: 900 6.4em/1em Raleway, Open Sans, Arial, Sans-Serif;
+  text-transform: uppercase;
+  letter-spacing: -0.05em;
+  margin: 2rem 0 0.5rem;
+}
+h2 {
+  font: 800 2em/1em Raleway, Open Sans, Arial, Sans-Serif;
+  text-transform: uppercase;
+  letter-spacing: 0.0em;
+  margin: 2rem 0 0.5rem;
+}
+
+
+/* Console */
+#console {position: absolute;bottom: 0;left: 0;width: 100%;height: 100px;box-sizing: border-box;background: #f0f0f0;color: #606060;font: 400 13px/16px Open Sans;letter-spacing: 0em;text-align: left;padding: 2px;overflow-y: scroll;0 } #console p {margin: 0; padding: 0;} #console p em {font-style: none;font-weight: 700;} 
+
+/* Slides show */
+
+.removeButtons{
+    float: right;
+}
+
+.toolBox{
+    margin: 0  auto;
+}
+
+/* If in mobile screen with maximum width 479px. The iPhone screen resolution is 320x480 px (except iPhone4, 640x960) */    
+@media only screen and (max-width: 479px){
+    .columnRight {
+        width:100%;
+    }
+}
