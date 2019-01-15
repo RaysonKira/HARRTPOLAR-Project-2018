@@ -15,7 +15,7 @@ public class travelDetailsDAO
 {
     // Place the DBConnect to class variable to be shared by all the methodsin this class
     string DBConnect = ConfigurationManager.ConnectionStrings["ConnStr"].ConnectionString;
-    public int insertTravelDetailsInfo(string tripName, DateTime startDate, DateTime endDate, string country, string description, double expectedExpense)
+    public int insertTravelDetailsInfo(string tripName, DateTime startDate, DateTime endDate, string country, string description, double expectedExpense, string state, string userId)
     {
 
         StringBuilder sqlStr = new StringBuilder();
@@ -27,9 +27,9 @@ public class travelDetailsDAO
         //
         StringBuilder sqlCommand = new StringBuilder();
         sqlStr.AppendLine("INSERT INTO travelDetails (tripName, startDate, endDate, country, ");
-        sqlStr.AppendLine("description, expectedExpense)");
+        sqlStr.AppendLine("description, expectedExpense, state, userId)");
         sqlStr.AppendLine("VALUES (@paraTripName, @paraStartDate, @paraEndDate, @paraCountry,");
-        sqlStr.AppendLine("@paraDescription, @paraExpectedExpense)");
+        sqlStr.AppendLine("@paraDescription, @paraExpectedExpense, @paraState, @paraUserId)");
         // Step 2 :Instantiate SqlConnection instance and SqlCommand instance
 
         SqlConnection myConn = new SqlConnection(DBConnect);
@@ -45,6 +45,8 @@ public class travelDetailsDAO
         sqlCmd.Parameters.AddWithValue("@paraCountry", country);
         sqlCmd.Parameters.AddWithValue("@paraDescription", description);
         sqlCmd.Parameters.AddWithValue("@paraExpectedExpense", expectedExpense);
+        sqlCmd.Parameters.AddWithValue("@paraState", state);
+        sqlCmd.Parameters.AddWithValue("@paraUserId", userId);
 
         // Step 4 Open connection the execute NonQuery of sql command   
 

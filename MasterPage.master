@@ -10,10 +10,20 @@
     <link type="text/css" rel="stylesheet" href="stylesheet/customStyle.css" />
     <link type="text/css" rel="stylesheet" href="stylesheet/style.css" />
     <!-- Font Awesome JS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/perfect-scrollbar/perfect-scrollbar.css"/>
+<!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="stylesheet/utilTable.css"/>
+	<link rel="stylesheet" type="text/css" href="stylesheet/mainTable.css"/>
     <title>Harrt Polar - Travel Itinerary Creator (Step 1)</title>
     <asp:ContentPlaceHolder id="head" runat="server">
 
@@ -34,7 +44,8 @@
     <!-- Sidebar  -->
     <nav id="sidebar">
         <div class="sidebar-header">
-            <h3 style="display: inline-block">Your Trips</h3>
+            <h3 style="display: inline-block">Welcome Back </h3>
+            <h3 style="display: inline-block"><small>Rayson</small></h3>
              <asp:Button ID="linkButton" class="btn btn-info" runat="server" Text="Add" style="float:right" OnClick="linkButton_Click"/>
         </div>
 
@@ -44,7 +55,7 @@
                 <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Home</a>
                 <ul class="collapse list-unstyled" id="homeSubmenu">
                     <li>
-                        <a href="#">Home 1</a>
+                        <a href="RaysonWebpages/itineraryHomepage.aspx">My Itineraries</a>
                     </li>
                     <li>
                         <a href="#">Home 2</a>
@@ -97,13 +108,22 @@
 
     <!-- Javascripts and stuffs -->
     <!-- jQuery CDN - Slim version (=without AJAX) -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!-- Popper.JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
     <!-- Bootstrap JS -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
     <script src="javascript/main.js"></script>
     <script src="javascript/step1.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/bootstrap/js/popper.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/select2/select2.min.js"></script>
+<!--===============================================================================================-->
+	<script src="javascript/mainTable.js"></script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB8X3vHKQpy-VEFBVOksi32bLhb7u6cUK0&libraries=places&callback=initMap">
+    </script>
     <!-- Loading javascript (Rayson)-->
     <asp:ContentPlaceHolder ID="loadJavaScript" runat="server">
 

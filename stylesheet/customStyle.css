@@ -398,3 +398,30 @@ h2 {
         width:100%;
     }
 }
+
+.dot {
+  height: 25px;
+  width: 25px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.test, .activities {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+.my-button {
+    display: inline-block;
+    margin: 5px;
+    font-size: 1.5em;
+    font-family: ‘Georgia’, serif;
+    font-style: italic;
+    border-radius: 50px;
+    padding: 8px 16px;
+    -moz-transition: all 0.2s;
+    -webkit-transition: all 0.2s;
+    transition: all 0.2s;
+}
+

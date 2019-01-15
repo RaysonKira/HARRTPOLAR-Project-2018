@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="../MasterPage.master" AutoEventWireup="true" CodeFile="itineraryCreatorStep2.aspx.cs" Inherits="itineraryCreatorStep1" %>
+﻿ <%@ Page Title="" Language="C#" MasterPageFile="../MasterPage.master" AutoEventWireup="true"  validateRequest="false" CodeFile="itineraryCreatorStep2.aspx.cs" Inherits="itineraryCreatorStep1" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 </asp:Content>
@@ -18,19 +18,66 @@
         $("#addNewActivity").click(function (e) {
             e.preventDefault();
             count++;
-            var div = document.getElementById('activity1'),
+            var div = document.getElementById('things'),
             clone = div.cloneNode(true); // true means clone all childNodes and all event handlers
                 
-            clone.id = "activity" + count;
-            document.querySelector(".travelItineraryDiv").appendChild(clone);
-            document.querySelector(".travelItineraryDiv").appendChild(document.createElement("br"));
-            //document.body.appendChild(clone);
+            clone.id = "things" + count;
+            $(clone).find("#dot1").attr("id", "dot" + count);
+            $(clone).find("#dot" + count).css("background-color" , "#bbb");
+            document.querySelector(".activities").appendChild(clone);
         })
+
+        function myFunc(id) {
+            document.getElementById("currentlyDot").innerHTML = "Currently Selected: " + id;
+
+            //Set timer to simulate a delay
+            setTimeout(changeColorFunc(id), 5000);
+        }
+
+        function changeColorFunc(id) {
+            $(document).ready(function () {
+                var radioValue = $("input[name='color']:checked").val();
+                if (radioValue == "green") {
+                    $("#" + id).css("background-color", "green");
+                }
+                else if (radioValue == "red") {
+                    $("#" + id).css("background-color", "red");
+                }
+                else if (radioValue == "yellow")
+                {
+                    $("#" + id).css("background-color", "yellow");
+                }
+                else
+                {
+                    alert("Not selected!" + radioValue);
+                }
+            })
+        }
+
+        $("#save").click(function (e) {
+            e.preventDefault();
+            var htmlData = document.getElementById("myId").innerHTML;
+            $('#<%=html.ClientID %>').val(htmlData);
+            $('#savingText').text("Saved HTML!");
+            setTimeout(timeoutFunction, 2000)
+        })
+
+        function timeoutFunction() {
+            $('#savingText').text("");
+        }
     </script>
+    <script src="../javascript/main.js"></script>
+    <script src="../javascript/step1.js"></script>
+<!--===============================================================================================-->
+	<script src="../vendor/bootstrap/js/popper.js"></script>
+<!--===============================================================================================-->
+	<script src="../vendor/select2/select2.min.js"></script>
+<!--===============================================================================================-->
+	<script src="../javascript/mainTable.js"></script>
 </asp:Content>
 
 <asp:Content ID="Content3" ContentPlaceHolderID="templateContent" Runat="Server">
-<div class="section1">
+    <div class="section1">
     <div class="container">
         <ul class="progressbar">
             <li class="active">Information</li>
@@ -45,24 +92,43 @@
     <br />
     <div class="row" style="margin: 0;"  align-self: center">
         <div class="columnRight">
-                <div class="travelItineraryDiv" contenteditable="true" style="border:solid;">
-                    <div id="activity1" style="padding-bottom: 100px;">
-                        <div id="itineraryActivity" style="border:dotted; width: 75%; float:left; height: 100px" >
-                            <p style="text-align:center">This text is editable!</p>
-                        </div>
-                        <div id="itineraryTime" style="border:dotted; width: 15%; float:right; height: 100px">
-                            <p style="text-align:center">Enter Time Here</p>
-                        </div>
-                    </div>
+                <div id="myId" class ="travelItineraryDiv" style="border:solid;">
+                    <table class="activities" id="activity1" style="width:100%;">
+                        <tr id="itineraryActivity">
+                            <th class="test">Importancy</th>
+                            <th class="test">Time</th>
+                            <th class="test">Activities</th>
+                        </tr>
+                        <tr class="activityMain test" id="things">
+                            <td class="test"><span class="dot" id="dot1" contenteditable="false" onclick="myFunc(this.id)"></span></td>
+                            <td class="test" contenteditable="true">Add Time Here</td>
+                            <td class="test" contenteditable="true">Add Activity Here</td>
+                        </tr>
+                        <br />
+                    </table>
                     <br/>
                 </div>
                 <br/>
-                <%--<asp:Button id="addNewActivity" runat="server" class="btn btn-info" style="text-align:center;" Text="Add New Activity"/>--%>
                 <button id="addNewActivity" class="btn btn-info" style="text-align:center;">Add New Activity</button>
-<%--                <div class="sliderContainer">
-                    <p>Change Your Days Using This Slider:</p>
-                    <input type="range" min="1" max="100" value="50" class="slider" id="myRange"/>
-                </div>--%>
+                <button id="save" class="btn btn-info" style="text-align:center;">Save All Changes</button>
+                <br />
+                <br />
+            <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
+            <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+                <ContentTemplate>
+                    <asp:Button ID="saveBtn" runat="server" class="btn btn-info" OnClick="saveBtn_Click" style="text-align:center;" text="Save to Database" Width="181px" />
+                    <br />
+                    <asp:Label ID="Label1" runat="server" Text=""></asp:Label>
+                    <br />
+                </ContentTemplate>
+            </asp:UpdatePanel>
+            <p id ="savingText"></p>
+            <asp:updateprogress id="UpdateProgress1" runat="server">
+                    <ProgressTemplate>
+                        <img class="auto-style2" src="../Images/Pacman-1s-200px.gif" />
+                        Saving Into Database...<br />
+                    </ProgressTemplate>
+            </asp:updateprogress>
         </div>
         <div class="sidebar">
             <div class="widget">
@@ -84,17 +150,106 @@
                             </div>
                             <div id='console'></div>
                         </div>
-                        <div class="eachTools" runat="server" id="autoComplete">
+                        <div class="eachTools" runat="server" id="changeImportancy">
                              <hr style="width:100%;"/>
                             <div class="toolsName">
-                                <div style="text-align:center">Enable/Disable Auto-Complete?<asp:Button ID="autoCompleteButton" class ="removeButtons btn btn-danger" runat="server" Text="X"/>
+                                <div style="text-align:center">Change Importancy<asp:Button ID="importancyIconRemove" class ="removeButtons btn btn-danger" runat="server" Text="X" OnClick="importancyIconRemove_Click"/>
                                 </div>
+                                <br />
+                                <center>
+                                    <small><strong>Steps to change importancy icon color:</strong></small>
+                                    <ol>
+                                        <li>Check the color you want to change your importancy icon.</li>
+                                        <li>Click on the importancy icon you want to change.</li>
+                                        <li>Tadaa! Importancy icon color changed!</li>
+                                    </ol> 
+                                </center>
+                                <center>
+                                <table style="border:none;">
+                                    <tr>
+                                        <td><span class="dot" style="background-color:red"></span></td>  
+                                        <td>Red</td>      
+                                        <td><input type="radio" name="color" value="red"/></td>                             
+                                    </tr>
+                                    <tr>
+                                        <td><span class="dot" style="background-color:yellow"></span></td>
+                                        <td>Yellow</td>
+                                        <td><input type="radio" name="color" value="yellow"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="dot" style="background-color:green"></span></td>
+                                        <td>Green</td>
+                                        <td><input type="radio" name="color" value="green"/></td>
+                                    </tr>
+                                </table>
+                                <p id="currentlyDot"><small><strong>Currently Selected: None</strong></small></p>
+                                </center>
                             </div>
                              <hr style="width:100%;"/>
-                            <p>
+                        </div>
+                        <div class = "eachTools" id="placeSuggestions">
+                            <div class ="toolsName">
+                                <div style="text-align:center">Place Suggestion<asp:Button ID="placeSuggestionRemove" class ="removeButtons btn btn-danger" runat="server" Text="X"/>
+                                </div>
+                                <br />
+                                <hr style="width:100%;"/>
+                                <div class="input-group mb-3">
+                                  <input id="box" type="text" class="form-control" placeholder="Enter A Service" aria-label="Recipient's username" aria-describedby="basic-addon2"/>
+                                  <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary" type="button">Button</button>
+                                  </div>
+                                </div>
+                                <small><strong>Example: </strong>Cafe, Restaurant</small>
+                                <p id="currentlyService"><small><strong>Currently Suggested Service: None</strong></small></p>
+                                <hr style="width:100%;"/>
+                                <div id="map" style="width:100%;height:300px; border:solid;"></div>
+                                <script>
+                                    var map;
+                                    var infowindow;
 
-                            </p>
-                             <hr style="width:100%;"/>
+                                    function initMap() {
+
+                                        document.getElementById('currentlyService').innerHTML = "Currently Suggested Service: Cafe";
+
+                                        var areaPlace = { lat: 1.3767, lng: 103.7535 }
+                                        map = new google.maps.Map(document.getElementById('map'), {
+                                            center: areaPlace,
+                                            zoom: 15
+                                        });
+
+                                        infowindow = new google.maps.InfoWindow();
+                                        var service = new google.maps.places.PlacesService(map);
+                                        service.nearbySearch({
+                                            location: areaPlace,
+                                            radius: 500,
+                                            type: ['cafe']
+                                        }, callback);
+                                    }
+
+                                    function callback(results, status) {
+                                        if (status === google.maps.places.PlacesServiceStatus.OK) {
+                                            for (var i = 0; i < results.length; i++) {
+                                                createMarker(results[i]);
+                                            }
+                                        }
+                                    }
+
+                                    function createMarker(place) {
+                                        var placeLoc = place.geometry.location;
+                                        var marker = new google.maps.Marker({
+                                            map: map,
+                                            position: place.geometry.location
+                                        });
+
+                                        google.maps.event.addListener(marker, 'click', function () {
+                                            infowindow.setContent(place.name);
+                                            infowindow.open(map, this);
+                                        });
+                                    }
+                                </script>
+                                <br />
+                            </div>
+                            <hr style="width:100%;"/>
                         </div>
                     </div>
                     <br />
@@ -103,6 +258,8 @@
             <br />
             </div>
             <div class="widget">
+                <asp:HiddenField runat="server" id="html"/>
+                <asp:HiddenField runat="server" ID="travelDetailsId"/>
                 <h3 class="widget-header">Sidebar Section</h3>
                 <p>Sit amet tootsie roll I love I love I love carrot cake. Cupcake candy icing wafer apple pie muffin powder sugar plum. Marzipan lollipop cake icing.</p>
             </div>
@@ -127,6 +284,8 @@
         </div>
     </div>
 </div>
+
 </asp:Content>
+
 
 

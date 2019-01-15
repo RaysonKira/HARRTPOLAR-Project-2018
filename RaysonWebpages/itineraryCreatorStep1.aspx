@@ -146,34 +146,15 @@
         jQuery(function () {
             jQuery('#popButton').click();
         });
-
-        var slideIndex = 1;
-        showSlides(slideIndex);
-
-        function plusSlides(n) {
-            showSlides(slideIndex += n);
-        }
-
-        function currentSlide(n) {
-            showSlides(slideIndex = n);
-        }
-
-        function showSlides(n) {
-            var i;
-            var slides = document.getElementsByClassName("mySlides");
-            var dots = document.getElementsByClassName("dot");
-            if (n > slides.length) { slideIndex = 1 }
-            if (n < 1) { slideIndex = slides.length }
-            for (i = 0; i < slides.length; i++) {
-                slides[i].style.display = "none";
-            }
-            for (i = 0; i < dots.length; i++) {
-                dots[i].className = dots[i].className.replace(" active1", "");
-            }
-            slides[slideIndex - 1].style.display = "block";
-            dots[slideIndex - 1].className += " active1";
-        }
     </script>
+    <script src="../javascript/main.js"></script>
+    <script src="../javascript/step1.js"></script>
+<!--===============================================================================================-->
+	<script src="../vendor/bootstrap/js/popper.js"></script>
+<!--===============================================================================================-->
+	<script src="../vendor/select2/select2.min.js"></script>
+<!--===============================================================================================-->
+	<script src="../javascript/mainTable.js"></script>
 </asp:Content>
 
 <asp:Content ID="Content3" ContentPlaceHolderID="templateContent" runat="Server">
@@ -223,6 +204,12 @@
                         <asp:textbox id="countryTextBox" class="form-control" placeholder="Enter Country" runat="server" autocompletetype="BusinessCountryRegion"></asp:textbox>
                     </div>
                 </div>
+                <div class="form-row align-items-center">
+                    <div class="col-auto my-1">
+                        <label class="mr-sm-2" for="countryTextBox">Country</label>
+                        <asp:textbox id="stateTextBox" class="form-control" placeholder="Enter State" runat="server" autocompletetype="BusinessCountryRegion"></asp:textbox>
+                    </div>
+                </div>
                 <div class="form-group">
                     <label for="description">Description</label>
                     <textarea cols="20" class="form-control" id="descriptionDetails" rows="3" runat="server"></textarea>
@@ -249,7 +236,7 @@
             <div class="sidebar">
                 <div class="widget">
                     <div class="toolBox">
-                        <label for="dialog_state"><i class="icon ion-ios-upload-outline"></i>Your Tools:</label>
+                        <label for="dialog_state"><i class="icon ion-ios-upload-outline"></i>Your Tools:</label><label style="float:right" class="button" id="settingButton" data-toggle="modal" data-target="#myModal"><i class="icon ion-ios-upload-outline"></i><i class="fa fa-gear fa-spin" style="font-size:24px"></i></label>
                         <br />
                         <asp:Label ID="userNameLbl" runat="server" Text=""></asp:Label>
                         <br />
@@ -308,6 +295,44 @@
             </div>
         </div>
     </div>
+
+    <%-- Settings Modal --%>
+     <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">ToolBox Settings</h4>
+        </div>
+        <div class="modal-body">
+            <div>
+              <p>Auto Complete Tool</p>
+              <asp:button runat="server" class = "btn btn-info" id="autoCompleteSettingsActivate" Text="Activate" OnClick="autoCompleteSettingsActivate_Click"></asp:button>
+              <asp:button runat="server" class = "btn btn-info" id="autoCompleteSettingsDeactivate" Text="Deactivate"></asp:button>
+            </div>
+
+            <div>
+              <p>Importancy Icon Color Tool</p>
+              <asp:button runat="server" class = "btn btn-info" id="importancyColorSettingActivate" Text="Activate"></asp:button>
+              <asp:button runat="server" class = "btn btn-info" id="importancyColorSettingDeactivate" Text="Deactivate"></asp:button>
+            </div>
+
+            <div>
+              <p>Place Suggestion Tool</p>
+              <asp:button runat="server" class = "btn btn-info" id="placeSuggestSettingActivate" Text="Activate"></asp:button>
+              <asp:button runat="server" class = "btn btn-info" id="placeSuggestSettingDeactivate" Text="Deactivate"></asp:button>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
 </asp:Content>
 
 
