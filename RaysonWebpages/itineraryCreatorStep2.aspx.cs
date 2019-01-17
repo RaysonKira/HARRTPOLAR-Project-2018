@@ -21,6 +21,8 @@ public partial class itineraryCreatorStep1 : System.Web.UI.Page
 {
     string errorMsg;
 
+    string realMessage;
+
     Dictionary<string, string> tools = new Dictionary<string, string>()
         {
             {"buttonEnabled", "Enabled" }, 
@@ -32,6 +34,7 @@ public partial class itineraryCreatorStep1 : System.Web.UI.Page
     {
         if (Page.IsPostBack == false)
         {
+            loadingToolBoxSettings();
             int travelId = int.Parse(Session["travelId"].ToString());
             travelDetailsId.Value = travelId.ToString();
             toolBoxCheck userObj = new toolBoxCheck();
@@ -172,6 +175,7 @@ public partial class itineraryCreatorStep1 : System.Web.UI.Page
     protected void saveBtn_Click(object sender, EventArgs e)
     {
         string test = html.Value;
+        string currentTime = DateTime.Now.ToShortTimeString();
 
         Thread.Sleep(5000);
 
@@ -179,16 +183,189 @@ public partial class itineraryCreatorStep1 : System.Web.UI.Page
 
         itineraryDetailsDAO itineraryDao = new itineraryDetailsDAO();
         System.Diagnostics.Debug.WriteLine("travel id = " + travelId);
-        int insCnt = itineraryDao.insertDetails(2, test, travelId);
+        int insCnt = itineraryDao.insertDetails(2, test, travelId, currentTime);
         if (insCnt == 1)
         {
             errorMsg = "Succesfully Saved!";
             Label1.Text = errorMsg;
+            Response.Redirect("itineraryCreatorStep3.aspx");
         }
         else
         {
             errorMsg = "Unable to save itinerary details, please inform system administrator!";
             Label1.Text = errorMsg;
+        }
+    }
+    public void loadingToolBoxSettings()
+    {
+        toolBoxCheck userObj = new toolBoxCheck();
+        toolBoxCheckDAO toolBoxDao = new toolBoxCheckDAO();
+
+        string json = JsonConvert.SerializeObject(tools);
+
+        userObj = toolBoxDao.getUsersData("2");
+        if (userObj != null)
+        {
+            string userName = userObj.userNameClass;
+            string userId = userObj.userIdClass;
+            string password = userObj.passwordClass;
+            string buttonEnabledData = userObj.buttonEnabledClass;
+            string email = userObj.emailClass;
+            string toolsString = userObj.toolsClass;
+
+            userNameLbl.Text = "Username: " + userName;
+            emailLbl.Text = "Email: " + email;
+
+            var values = JsonConvert.DeserializeObject<Dictionary<string, string>>(toolsString);
+            if (values.Count == 0)
+            {
+                //Adding default value into the account 
+                //Update the database table
+                int insCnt = toolBoxDao.updateTools(json, 2);
+                if (insCnt == 1)
+                {
+                    realMessage = "success";
+                }
+                else
+                {
+                    realMessage = "failed";
+                }
+            }
+            else
+            {
+                //Loads auto complete tool
+                foreach (KeyValuePair<string, string> item in values)
+                {
+                    //check if button enabled key exists
+                    if (values.ContainsKey("buttonEnabled") == true)
+                    {
+                        autoCompleteSettingsActivate.Enabled = false;
+                        autoCompleteSettingsDeactivate.Enabled = true;
+                    }
+                    else if (values.ContainsKey("buttonEnabled") == false)
+                    {
+                        autoCompleteSettingsDeactivate.Enabled = false;
+                        autoCompleteSettingsActivate.Enabled = true;
+                    }
+                }
+                //ends 
+
+                //Loading of place suggestion
+                foreach (KeyValuePair<string, string> item in values)
+                {
+                    //check if button enabled key exists
+                    if (values.ContainsKey("iconColor") == true)
+                    {
+                        importancyColorSettingActivate.Enabled = false;
+                        importancyColorSettingDeactivate.Enabled = true;
+                    }
+                    else if (values.ContainsKey("iconColor") == false)
+                    {
+                        importancyColorSettingDeactivate.Enabled = false;
+                        importancyColorSettingActivate.Enabled = true;
+                    }
+                }
+
+                //Loading of importancy tools
+                foreach (KeyValuePair<string, string> item in values)
+                {
+                    //check if button enabled key exists
+                    if (values.ContainsKey("placeSuggestion") == true)
+                    {
+                        placeSuggestSettingActivate.Enabled = false;
+                        placeSuggestSettingDeactivate.Enabled = true;
+                    }
+                    else if (values.ContainsKey("placeSuggestion") == false)
+                    {
+                        placeSuggestSettingDeactivate.Enabled = false;
+                        placeSuggestSettingActivate.Enabled = true;
+                    }
+                }
+            }
+        }
+    }
+
+    protected void importancyColorSettingActivate_Click(object sender, EventArgs e)
+    {
+        changeImportancy.Visible = true;
+        string errorMessage;
+
+        toolBoxCheck userObj = new toolBoxCheck();
+        toolBoxCheckDAO toolBoxDao = new toolBoxCheckDAO();
+        //search in the database for user 2 datas
+        userObj = toolBoxDao.getUsersData("2");
+
+        // remove the item from the database's dictionary 
+        if (userObj != null)
+        {
+            string userName = userObj.userNameClass;
+            string userId = userObj.userIdClass;
+            string password = userObj.passwordClass;
+            string buttonEnabledData = userObj.buttonEnabledClass;
+            string toolsString = userObj.toolsClass;
+
+            // Performing loading of tools 
+            var values = JsonConvert.DeserializeObject<Dictionary<string, string>>(toolsString);
+            foreach (KeyValuePair<string, string> item in values)
+            {
+                if (values.ContainsKey("iconColor") == false)
+                {
+                    values.Add("iconColor", "Enabled");
+                    string json = JsonConvert.SerializeObject(values);
+                    int insCnt = toolBoxDao.updateTools(json, 2);
+                    if (insCnt == 1)
+                    {
+                        errorMessage = "No error!";
+                        break;
+                    }
+                }
+            }
+        }
+        else
+        {
+            errorMessage = "No details found!";
+        }
+    }
+
+    protected void placeSuggestSettingActivate_Click(object sender, EventArgs e)
+    {
+        placeSuggestions.Visible = true;
+        string errorMessage;
+
+        toolBoxCheck userObj = new toolBoxCheck();
+        toolBoxCheckDAO toolBoxDao = new toolBoxCheckDAO();
+        //search in the database for user 2 datas
+        userObj = toolBoxDao.getUsersData("2");
+
+        // remove the item from the database's dictionary 
+        if (userObj != null)
+        {
+            string userName = userObj.userNameClass;
+            string userId = userObj.userIdClass;
+            string password = userObj.passwordClass;
+            string buttonEnabledData = userObj.buttonEnabledClass;
+            string toolsString = userObj.toolsClass;
+
+            // Performing loading of tools 
+            var values = JsonConvert.DeserializeObject<Dictionary<string, string>>(toolsString);
+            foreach (KeyValuePair<string, string> item in values)
+            {
+                if (values.ContainsKey("placeSuggestion") == false)
+                {
+                    values.Add("placeSuggestion", "Enabled");
+                    string json = JsonConvert.SerializeObject(values);
+                    int insCnt = toolBoxDao.updateTools(json, 2);
+                    if (insCnt == 1)
+                    {
+                        errorMessage = "No error!";
+                        break;
+                    }
+                }
+            }
+        }
+        else
+        {
+            errorMessage = "No details found!";
         }
     }
 }

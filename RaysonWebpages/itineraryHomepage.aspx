@@ -8,46 +8,37 @@
     <img src="../images/logo.PNG" class="nav-logo"/>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="templateContent" Runat="Server">
-    	<div class="limiter">
-		<div class="container-table1000">
-			<div class="wrap-table1000">
-				<div class="table100">
-					<table>
-						<thead>
-							<tr class="table100-head">
-								<th class="column1">Date Created</th>
-								<th class="column2">Itinerary ID</th>
-								<th class="column3">Itinerary Name</th>
-								<th class="column4">Start Date</th>
-								<th class="column5">End Date</th>
-                                <th class="column6">Country</th>
-                                <th class="column7">State</th>
-                                <th class="column8">Action</th>
-							</tr>
-						</thead>
-						<tbody runat="server" id="tableBody">
-                            <% foreach (var x in details())
-                                { %>
-                               <tr>
-                                   <th class="column1">20/10/2000</th>
-                                   <th class="column2"><%= x.travelDetailsId %></th>
-                                   <th class="column3"><%= x.tripNameClass %></th>
-                                   <th class="column4"><%= x.startDateClass %></th>
-                                   <th class="column5"><%= x.endDateClass %></th>
-                                   <th class="column6"><%= x.countryClass %></th>
-                                   <th class="column7"><%= x.stateClass %></th>
-                                   <th class="column8">
-                                       <asp:Button ID="edit" value="<%= x.travelDetailsId %>" class="btn btn-info editButton" runat="server" Text="Edit" />
-                                       <asp:Button ID="delete" value="<%= x.travelDetailsId %>" class="btn btn-info my-button" runat="server" Text="Delete" />
-                                   </th>
-                               </tr>
-                            <% } %>
-						</tbody>
-					</table>
-				</div>
-			</div>
-		</div>
-	</div>
+    <div class="limiter">
+        <asp:GridView ID="gv1" runat="server" AutoGenerateColumns="False" CellPadding="4" class="table100" ForeColor="#333333" GridLines="None" OnRowCommand="deleteAndEditRow" OnSelectedIndexChanged="gv1_SelectedIndexChanged">
+            <AlternatingRowStyle BackColor="White" />
+            <Columns>
+                <asp:BoundField HeaderText="Date Created" ReadOnly="True" DataField="currentTimeClass" NullDisplayText="Nil" />
+                <asp:BoundField DataField="travelDetailsId" HeaderText="Itinerary ID" ReadOnly="True" />
+                <asp:BoundField DataField="tripNameClass" HeaderText="Itinerary Name" ReadOnly="True" />
+                <asp:BoundField DataField="startDateClass" HeaderText="Start Date" ReadOnly="True" />
+                <asp:BoundField DataField="endDateClass" HeaderText="End Date" ReadOnly="True" />
+                <asp:BoundField DataField="countryClass" HeaderText="Country" ReadOnly="True" />
+                <asp:BoundField DataField="stateClass" HeaderText="State" ReadOnly="True" />
+                <asp:ButtonField CommandName="editButton" HeaderText="Edit Travel Details" Text="Edit">
+                <ItemStyle Height="80px" Width="80px" Wrap="False" />
+                </asp:ButtonField>
+                <asp:ButtonField CommandName="editItinerary" HeaderText="Edit Itinerary" Text="Edit" />
+                <asp:ButtonField CommandName="deleteButton" HeaderText="Remove" Text="Delete">
+                <ItemStyle Height="80px" Width="80px" />
+                </asp:ButtonField>
+            </Columns>
+            <EditRowStyle BackColor="#2461BF" />
+            <FooterStyle BackColor="#507CD1" BorderColor="Black" Font-Bold="True" ForeColor="White" />
+            <HeaderStyle BackColor="#507CD1" BorderColor="Black" Font-Bold="True" ForeColor="White" />
+            <PagerStyle BackColor="#2461BF" ForeColor="White" HorizontalAlign="Center" />
+            <RowStyle BackColor="#EFF3FB" />
+            <SelectedRowStyle BackColor="#D1DDF1" Font-Bold="True" ForeColor="#333333" />
+            <SortedAscendingCellStyle BackColor="#F5F7FB" />
+            <SortedAscendingHeaderStyle BackColor="#6D95E1" />
+            <SortedDescendingCellStyle BackColor="#E9EBEF" />
+            <SortedDescendingHeaderStyle BackColor="#4870BE" />
+        </asp:GridView>
+    </div>   
 </asp:Content>
 <asp:Content ID="Content5" ContentPlaceHolderID="loadJavaScript" Runat="Server">
     <script src="../javascript/main.js"></script>

@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="../MasterPage.master" AutoEventWireup="true" CodeFile="itineraryCreatorStep1.aspx.cs" Inherits="itineraryCreatorStep1" %>
+﻿  <%@ Page Title="" Language="C#" MasterPageFile="../MasterPage.master" AutoEventWireup="true" CodeFile="itineraryCreatorStep1.aspx.cs" Inherits="itineraryCreatorStep1" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
 
     <style type="text/css">
@@ -236,7 +236,7 @@
             <div class="sidebar">
                 <div class="widget">
                     <div class="toolBox">
-                        <label for="dialog_state"><i class="icon ion-ios-upload-outline"></i>Your Tools:</label><label style="float:right" class="button" id="settingButton" data-toggle="modal" data-target="#myModal"><i class="icon ion-ios-upload-outline"></i><i class="fa fa-gear fa-spin" style="font-size:24px"></i></label>
+                        <label for="dialog_state"><i class="icon ion-ios-upload-outline"></i>Your Tools:</label><label style="float:right" class="button" id="settingButton" data-toggle="modal" data-target="#myModal"><i class="icon ion-ios-upload-outline"></i><img style="width:20px; height:20px;" class="auto-style2" src="../Images/Gear-1s-200px.gif" /></label>
                         <br />
                         <asp:Label ID="userNameLbl" runat="server" Text=""></asp:Label>
                         <br />

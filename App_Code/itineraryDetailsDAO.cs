@@ -49,6 +49,7 @@ public class itineraryDetailsDAO
                 myTD.countryClass = row["country"].ToString();
                 myTD.stateClass = row["state"].ToString();
                 myTD.userIdClass = row["userId"].ToString();
+                myTD.currentTimeClass = row["dateEntered"].ToString();
 
                 tdList.Add(myTD);
             }
@@ -60,7 +61,7 @@ public class itineraryDetailsDAO
         return tdList;
     }
 
-    public int insertDetails(int id, string itineraryHtml, int travelId)
+    public int insertDetails(int id, string itineraryHtml, int travelId, string currentTime)
     {
         StringBuilder sqlStr = new StringBuilder();
         int result = 0;    // Execute NonQuery return an integer value
@@ -71,9 +72,9 @@ public class itineraryDetailsDAO
         //
         StringBuilder sqlCommand = new StringBuilder();
         sqlStr.AppendLine("INSERT INTO itineraryDetails (itineraryHtml, travelDetailsId,");
-        sqlStr.AppendLine("userId)");
+        sqlStr.AppendLine("userId, dateEntered)");
         sqlStr.AppendLine("VALUES (@paraItineraryHtml, @paraTravelId,");
-        sqlStr.AppendLine("@paraUserId)");
+        sqlStr.AppendLine("@paraUserId, @paraCurrentTime)");
         // Step 2 :Instantiate SqlConnection instance and SqlCommand instance
 
         SqlConnection myConn = new SqlConnection(DBConnect);
@@ -85,6 +86,111 @@ public class itineraryDetailsDAO
 
         sqlCmd.Parameters.AddWithValue("@paraItineraryHtml", itineraryHtml);
         sqlCmd.Parameters.AddWithValue("@paraUserId", id);
+        sqlCmd.Parameters.AddWithValue("@paraTravelId", travelId);
+        sqlCmd.Parameters.AddWithValue("@paraCurrentTime", currentTime);
+        // Step 4 Open connection the execute NonQuery of sql command   
+
+        myConn.Open();
+        result = sqlCmd.ExecuteNonQuery();
+
+        // Step 5 :Close connection
+        myConn.Close();
+
+        return result;
+    }
+
+    public int deleteItineraryDetailsInfo(int itineraryDetailsId)
+    {
+
+        StringBuilder sqlStr = new StringBuilder();
+        int result = 0;    // Execute NonQuery return an integer value
+        SqlCommand sqlCmd = new SqlCommand();
+        // Step1 : Create SQL insert command to add record to TDMaster using     
+
+        //         parameterised query in values clause
+        //
+        StringBuilder sqlCommand = new StringBuilder();
+        sqlStr.AppendLine("DELETE FROM itineraryDetails");
+        sqlStr.AppendLine("WHERE travelDetailsId = @paraItineraryDetailsId");
+        // Step 2 :Instantiate SqlConnection instance and SqlCommand instance
+
+        SqlConnection myConn = new SqlConnection(DBConnect);
+
+        sqlCmd = new SqlCommand(sqlStr.ToString(), myConn);
+
+        // Step 3 : Add each parameterised query variable with value
+        //          complete to add all parameterised queries
+
+        sqlCmd.Parameters.AddWithValue("@paraitineraryDetailsId", itineraryDetailsId);
+
+        // Step 4 Open connection the execute NonQuery of sql command   
+
+        myConn.Open();
+        result = sqlCmd.ExecuteNonQuery();
+
+        // Step 5 :Close connection
+        myConn.Close();
+
+        return result;
+    }
+
+    public itineraryDetails getItineraryDetailsData(int travelDetailsId)
+    {
+        //Get data to see which user is is 
+
+        SqlDataAdapter da;
+        DataSet ds = new DataSet();
+
+        //Create Adapter
+        //WRITE SQL Statement to retrieve all columns from Customer by customer Id using query parameter
+        StringBuilder sqlCommand = new StringBuilder();
+        sqlCommand.AppendLine("Select itineraryHtml from itineraryDetails where");
+        sqlCommand.AppendLine("travelDetailsId = @paraItineraryDetailsId");
+
+        itineraryDetails obj = new itineraryDetails();
+
+        SqlConnection myConn = new SqlConnection(DBConnect);
+
+        da = new SqlDataAdapter(sqlCommand.ToString(), myConn);
+        da.SelectCommand.Parameters.AddWithValue("paraItineraryDetailsId", travelDetailsId);
+
+        da.Fill(ds, "itineraryDetails");
+        int rec_cnt = ds.Tables["itineraryDetails"].Rows.Count;
+        if (rec_cnt > 0)
+        {
+            DataRow row = ds.Tables["itineraryDetails"].Rows[0];
+            obj.itineraryHtmlClass= row["itineraryHtml"].ToString();
+        }
+        else
+        {
+            obj = null;
+        }
+
+        return obj;
+    }
+
+    public int updateItinerary(string itineraryHtml, int travelId)
+    {
+        StringBuilder sqlStr = new StringBuilder();
+        int result = 0;    // Execute NonQuery return an integer value
+        SqlCommand sqlCmd = new SqlCommand();
+        // Step1 : Create SQL insert command to add record to TDMaster using     
+
+        //         parameterised query in values clause
+        //
+        StringBuilder sqlCommand = new StringBuilder();
+        sqlStr.AppendLine("UPDATE itineraryDetails SET itineraryHtml = @paraItineraryHtml");
+        sqlStr.AppendLine("WHERE travelDetailsId = @paraTravelId");
+        // Step 2 :Instantiate SqlConnection instance and SqlCommand instance
+
+        SqlConnection myConn = new SqlConnection(DBConnect);
+
+        sqlCmd = new SqlCommand(sqlStr.ToString(), myConn);
+
+        // Step 3 : Add each parameterised query variable with value
+        //          complete to add all parameterised queries
+
+        sqlCmd.Parameters.AddWithValue("@paraItineraryHtml", itineraryHtml);
         sqlCmd.Parameters.AddWithValue("@paraTravelId", travelId);
         // Step 4 Open connection the execute NonQuery of sql command   
 

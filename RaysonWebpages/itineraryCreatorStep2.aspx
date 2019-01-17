@@ -64,7 +64,7 @@
 
         function timeoutFunction() {
             $('#savingText').text("");
-        }
+        } 
     </script>
     <script src="../javascript/main.js"></script>
     <script src="../javascript/step1.js"></script>
@@ -133,7 +133,7 @@
         <div class="sidebar">
             <div class="widget">
                     <div class="toolBox">
-                        <label for="dialog_state"><i class="icon ion-ios-upload-outline"></i>Your Tools:</label>
+                    <label for="dialog_state"><i class="icon ion-ios-upload-outline"></i>Your Tools:</label><label style="float:right" class="button" id="settingButton" data-toggle="modal" data-target="#myModal"><i class="icon ion-ios-upload-outline"></i><img style="width:20px; height:20px;" class="auto-style2" src="../Images/Gear-1s-200px.gif" /></label>
                         <br />
                         <asp:Label ID="userNameLbl" runat="server" Text=""></asp:Label>
                         <br />
@@ -187,7 +187,7 @@
                             </div>
                              <hr style="width:100%;"/>
                         </div>
-                        <div class = "eachTools" id="placeSuggestions">
+                        <div class = "eachTools" runat="server" id="placeSuggestions">
                             <div class ="toolsName">
                                 <div style="text-align:center">Place Suggestion<asp:Button ID="placeSuggestionRemove" class ="removeButtons btn btn-danger" runat="server" Text="X"/>
                                 </div>
@@ -284,7 +284,43 @@
         </div>
     </div>
 </div>
+    <%-- Settings Modal --%>
+     <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">ToolBox Settings</h4>
+        </div>
+        <div class="modal-body">
+            <div>
+              <p>Auto Complete Tool</p>
+              <asp:button runat="server" class = "btn btn-info" id="autoCompleteSettingsActivate" Text="Activate"></asp:button>
+              <asp:button runat="server" class = "btn btn-info" id="autoCompleteSettingsDeactivate" Text="Deactivate"></asp:button>
+            </div>
 
+            <div>
+              <p>Importancy Icon Color Tool</p>
+              <asp:button runat="server" class = "btn btn-info" id="importancyColorSettingActivate" Text="Activate" OnClick="importancyColorSettingActivate_Click"></asp:button>
+              <asp:button runat="server" class = "btn btn-info" id="importancyColorSettingDeactivate" Text="Deactivate"></asp:button>
+            </div>
+
+            <div>
+              <p>Place Suggestion Tool</p>
+              <asp:button runat="server" class = "btn btn-info" id="placeSuggestSettingActivate" Text="Activate" OnClick="placeSuggestSettingActivate_Click"></asp:button>
+              <asp:button runat="server" class = "btn btn-info" id="placeSuggestSettingDeactivate" Text="Deactivate"></asp:button>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
 </asp:Content>
 
 

@@ -12,7 +12,7 @@ public class itineraryDetails
     {
 
     }
-    public itineraryDetails(string id, string tripName, DateTime startDate, DateTime endDate, string country, string description, double expectedExpenses, string state, string userId, string itineraryHtml, int travelId)
+    public itineraryDetails(string id, string tripName, DateTime startDate, DateTime endDate, string country, string description, double expectedExpenses, string state, string userId, string itineraryHtml, int travelId, string currentTime)
     {
         travelDetailsId = id;
         travelIdClass = travelId;
@@ -25,10 +25,12 @@ public class itineraryDetails
         stateClass = state;
         userIdClass = userId;
         itineraryHtmlClass = itineraryHtml;
+        currentTimeClass = currentTime;
     }
     public string travelDetailsId { get; set; }
     public int travelIdClass { get; set; }
     public string tripNameClass { get; set; }
+    public string currentTimeClass { get; set; }
     public string userIdClass { get; set; }
     public DateTime startDateClass { get; set; }
     public DateTime endDateClass { get; set; }

@@ -11,4 +11,9 @@ public partial class RaysonWebpages_itineraryCreatorStep3 : System.Web.UI.Page
     {
 
     }
+
+    protected void itineraryManagerButton_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("itineraryHomepage.aspx");
+    }
 }

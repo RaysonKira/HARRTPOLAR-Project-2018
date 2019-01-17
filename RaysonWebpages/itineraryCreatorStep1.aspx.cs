@@ -111,7 +111,7 @@ public partial class itineraryCreatorStep1 : System.Web.UI.Page
         status.Text = "";
 
         // Initialize all variables 
-        string tripName, email, country, description, state;
+        string tripName, email, country, description, state, currentTime;
         DateTime startDate, endDate;
         double expectedExpense;
         string userId;
@@ -125,6 +125,7 @@ public partial class itineraryCreatorStep1 : System.Web.UI.Page
         endDate = DateTime.Parse(endDateInput.Text);
         expectedExpense = 0.00;
         state = stateTextBox.Text.ToString();
+        currentTime = DateTime.Now.ToString("yyyy, MM, dd, hh, mm, ss");
         userId = "2";
 
 
@@ -134,7 +135,7 @@ public partial class itineraryCreatorStep1 : System.Web.UI.Page
         try
         {            
             travelDetailsDAO tdDAO = new travelDetailsDAO();
-            int insCnt = tdDAO.insertTravelDetailsInfo(tripName, startDate, endDate, country, description, expectedExpense, state, userId);
+            int insCnt = tdDAO.insertTravelDetailsInfo(tripName, startDate, endDate, country, description, expectedExpense, state, userId, currentTime);
             if (insCnt == 1)
             {
                 itineraryDetailsDAO travelItineraryDao = new itineraryDetailsDAO();
